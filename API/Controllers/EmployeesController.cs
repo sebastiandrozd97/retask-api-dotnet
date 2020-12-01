@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Employees;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -12,24 +14,22 @@ namespace API.Controllers
   [ApiController]
   public class EmployeesController : ControllerBase
   {
-    private readonly DataContext _context;
-    public EmployeesController(DataContext context)
+    private readonly IMediator _mediator;
+    public EmployeesController(IMediator mediator)
     {
-      _context = context;
+      _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Employee>>> Get()
+    public async Task<ActionResult<List<Employee>>> List()
     {
-        var employees = await _context.Employees.ToListAsync();
-        return Ok(employees);
+      return await _mediator.Send(new List.Query());
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Employee>> Get(Guid id)
+    public async Task<ActionResult<Employee>> Details(Guid id)
     {
-        var employee = await _context.Employees.FindAsync(id);
-        return Ok(employee);
+      return await _mediator.Send(new Details.Query{Id = id});
     }
   }
 }
