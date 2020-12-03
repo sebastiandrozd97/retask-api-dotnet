@@ -6,14 +6,11 @@ using Persistence;
 
 namespace Application.Employees
 {
-  public class Edit
+  public class Delete
   {
     public class Command : IRequest
     {
       public Guid Id { get; set; }
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public string Telephone { get; set; }
     }
 
     public class Handler : IRequestHandler<Command>
@@ -33,9 +30,7 @@ namespace Application.Employees
           throw new Exception("Could not find employee");
         }
 
-        employee.FirstName = request.FirstName ?? employee.FirstName;
-        employee.LastName = request.LastName ?? employee.LastName;
-        employee.Telephone = request.Telephone ?? employee.Telephone;
+        _context.Remove(employee);
 
         var success = await _context.SaveChangesAsync() > 0;
 
