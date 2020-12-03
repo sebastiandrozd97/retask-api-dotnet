@@ -1,13 +1,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain;
 using MediatR;
 using Persistence;
 
 namespace Application.Employees
 {
-  public class Create
+  public class Edit
   {
     public class Command : IRequest
     {
@@ -27,15 +26,17 @@ namespace Application.Employees
 
       public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
       {
-        var employee = new Employee
-        {
-          Id = request.Id,
-          FirstName = request.FirstName,
-          LastName = request.LastName,
-          Telephone = request.Telephone
-        };
+        var employee = await _context.Employees.FindAsync(request.Id);
 
-        _context.Employees.Add(employee);
+        if (employee == null)
+        {
+          throw new Exception("Could not find activity");
+        }
+
+        employee.FirstName = request.FirstName ?? employee.FirstName;
+        employee.LastName = request.LastName ?? employee.LastName;
+        employee.Telephone = request.Telephone ?? employee.Telephone;
+
         var success = await _context.SaveChangesAsync() > 0;
 
         if (success)

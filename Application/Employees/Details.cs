@@ -1,19 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Employees
 {
   public class Details
   {
-    public class Query : IRequest<Employee> 
-    { 
-        public Guid Id { get; set; }
+    public class Query : IRequest<Employee>
+    {
+      public Guid Id { get; set; }
     }
 
     public class Handler : IRequestHandler<Query, Employee>
