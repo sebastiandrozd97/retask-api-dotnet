@@ -1,4 +1,5 @@
 using Application.Employees;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,15 +28,22 @@ namespace API
       {
         opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
       });
+
       services.AddCors(opt =>
       {
         opt.AddPolicy("CorsPolicy", policy =>
               {
-            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
-          });
+                policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+              });
       });
       services.AddMediatR(typeof(List.Handler).Assembly);
-      services.AddControllers();
+
+      services.AddControllers()
+        .AddFluentValidation(cfg =>
+        {
+          cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+        });
+
       services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

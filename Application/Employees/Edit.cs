@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -14,6 +15,15 @@ namespace Application.Employees
       public string FirstName { get; set; }
       public string LastName { get; set; }
       public string Telephone { get; set; }
+    }
+
+    public class CommandValidator : AbstractValidator<Command>
+    {
+      public CommandValidator()
+      {
+        RuleFor(x => x.FirstName).NotEmpty();
+        RuleFor(x => x.LastName).NotEmpty();
+      }
     }
 
     public class Handler : IRequestHandler<Command>
