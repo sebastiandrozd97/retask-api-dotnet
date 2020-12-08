@@ -1,6 +1,8 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using FluentValidation;
 using MediatR;
 using Persistence;
@@ -40,7 +42,7 @@ namespace Application.Employees
 
         if (employee == null)
         {
-          throw new Exception("Could not find employee");
+          throw new RestException(HttpStatusCode.NotFound, new { employee = "Not found" });
         }
 
         employee.FirstName = request.FirstName ?? employee.FirstName;

@@ -1,6 +1,8 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using Domain;
 using MediatR;
 using Persistence;
@@ -25,6 +27,11 @@ namespace Application.Employees
       public async Task<Employee> Handle(Query request, CancellationToken cancellationToken)
       {
         var employee = await _context.Employees.FindAsync(request.Id);
+
+        if (employee == null)
+        {
+          throw new RestException(HttpStatusCode.NotFound, new { employee = "Not found" });
+        }
 
         return employee;
       }
