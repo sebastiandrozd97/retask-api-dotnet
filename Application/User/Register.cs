@@ -19,7 +19,11 @@ namespace Application.User
     public class Command : IRequest<User>
     {
       public string DisplayName { get; set; }
+      public string FirstName { get; set; }
+      public string LastName { get; set; }
+      public string PhoneNumber { get; set; }
       public string Username { get; set; }
+      public bool isSupervisor { get; set; }
       public string Email { get; set; }
       public string Password { get; set; }
     }
@@ -30,6 +34,7 @@ namespace Application.User
       {
         RuleFor(x => x.DisplayName).NotEmpty();
         RuleFor(x => x.Username).NotEmpty();
+        RuleFor(x => x.FirstName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty().EmailAddress();
         RuleFor(x => x.Password).Password();
       }
@@ -63,6 +68,10 @@ namespace Application.User
         var user = new AppUser
         {
           DisplayName = request.DisplayName,
+          FirstName = request.FirstName,
+          LastName = request.LastName,
+          PhoneNumber = request.PhoneNumber,
+          isSupervisor = request.isSupervisor,
           Email = request.Email,
           UserName = request.Username
         };
@@ -75,7 +84,11 @@ namespace Application.User
           {
             DisplayName = user.DisplayName,
             Token = _jwtGenerator.CreateToken(user),
-            Username = user.UserName
+            Username = user.UserName,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            PhoneNumber = request.PhoneNumber,
+            isSupervisor = request.isSupervisor,
           };
         }
 

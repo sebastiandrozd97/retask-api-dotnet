@@ -1,23 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Employees;
+using Application.Workdays;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-  public class EmployeesController : BaseController
+  public class WorkdaysController : BaseController
   {
     [HttpGet]
-    public async Task<ActionResult<List<Employee>>> List()
+    public async Task<ActionResult<List<Workday>>> List()
     {
       return await Mediator.Send(new List.Query());
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Employee>> Details(Guid id)
+    public async Task<ActionResult<Workday>> Details(Guid id)
     {
       return await Mediator.Send(new Details.Query { Id = id });
     }

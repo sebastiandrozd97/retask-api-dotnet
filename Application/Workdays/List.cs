@@ -6,13 +6,13 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Employees
+namespace Application.Workdays
 {
   public class List
   {
-    public class Query : IRequest<List<Employee>> { }
+    public class Query : IRequest<List<Workday>> { }
 
-    public class Handler : IRequestHandler<Query, List<Employee>>
+    public class Handler : IRequestHandler<Query, List<Workday>>
     {
       private readonly DataContext _context;
       public Handler(DataContext context)
@@ -20,11 +20,11 @@ namespace Application.Employees
         _context = context;
       }
 
-      public async Task<List<Employee>> Handle(Query request, CancellationToken cancellationToken)
+      public async Task<List<Workday>> Handle(Query request, CancellationToken cancellationToken)
       {
-        var employees = await _context.Employees.ToListAsync();
+        var workdays = await _context.Workdays.ToListAsync();
 
-        return employees;
+        return workdays;
       }
     }
   }

@@ -1,30 +1,18 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain;
-using FluentValidation;
+using Application.Errors;
 using MediatR;
 using Persistence;
 
-namespace Application.Employees
+namespace Application.Workdays
 {
-  public class Create
+  public class Delete
   {
     public class Command : IRequest
     {
       public Guid Id { get; set; }
-      public string FirstName { get; set; }
-      public string LastName { get; set; }
-      public string Telephone { get; set; }
-    }
-
-    public class CommandValidator : AbstractValidator<Command>
-    {
-      public CommandValidator()
-      {
-        RuleFor(x => x.FirstName).NotEmpty();
-        RuleFor(x => x.LastName).NotEmpty();
-      }
     }
 
     public class Handler : IRequestHandler<Command>
@@ -37,15 +25,15 @@ namespace Application.Employees
 
       public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
       {
-        var employee = new Employee
-        {
-          Id = request.Id,
-          FirstName = request.FirstName,
-          LastName = request.LastName,
-          Telephone = request.Telephone
-        };
+        var workday = await _context.Workdays.FindAsync(request.Id);
 
-        _context.Employees.Add(employee);
+        if (workday == null)
+        {
+          throw new RestException(HttpStatusCode.NotFound, new { workday = "Not found" });
+        }
+
+        _context.Remove(workday);
+
         var success = await _context.SaveChangesAsync() > 0;
 
         if (success)

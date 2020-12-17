@@ -31,6 +31,10 @@ namespace Application.User
         {
           DisplayName = user.DisplayName,
           Username = user.UserName,
+          FirstName = user.FirstName,
+          LastName = user.LastName,
+          PhoneNumber = user.PhoneNumber,
+          isSupervisor = user.isSupervisor,
           Token = _jwtGenerator.CreateToken(user)
         };
       }

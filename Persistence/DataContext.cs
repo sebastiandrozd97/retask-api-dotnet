@@ -10,7 +10,7 @@ namespace Persistence
     {
     }
 
-    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Workday> Workdays { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

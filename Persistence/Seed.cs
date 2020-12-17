@@ -18,18 +18,30 @@ namespace Persistence
           {
             DisplayName = "Seba",
             UserName = "seba",
+            FirstName = "Sebastian",
+            LastName = "Drozd",
+            PhoneNumber = "673443112",
+            isSupervisor = true,
             Email = "seba@test.com"
           },
           new AppUser
           {
             DisplayName = "Piotr",
             UserName = "piotr",
+            FirstName = "Piotr",
+            LastName = "Płytkowy",
+            PhoneNumber = "775554666",
+            isSupervisor = false,
             Email = "piotr@test.com"
           },
           new AppUser
           {
             DisplayName = "Artur",
             UserName = "artur",
+            FirstName = "Artur",
+            LastName = "Malowniczy",
+            PhoneNumber = "884443454",
+            isSupervisor = false,
             Email = "artur@test.com"
           },
         };
@@ -39,73 +51,41 @@ namespace Persistence
         }
       }
 
-      if (!context.Employees.Any())
+      if (!context.Workdays.Any())
       {
-        var employees = new List<Employee>
+        var workdays = new List<Workday>
         {
-        new Employee
+        new Workday
         {
-            FirstName = "Sebastian",
-            LastName = "Drozd",
-            Telephone = "638334112"
+            Task = "Malowanie, tapetowanie, fugowanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Artur",
-            LastName = "Płytkowy",
-            Telephone = "698332444"
+            Task = "Malowanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Piotr",
-            LastName = "Malowniczy",
-            Telephone = "638334112"
+            Task = "Sprzątanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Kamil",
-            LastName = "Fugowy",
-            Telephone = "638334112"
+            Task = "Fugowanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Karol",
-            LastName = "Szpachlowy",
-            Telephone = "638334112"
+            Task = "Szpachlowanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Damian",
-            LastName = "Randomowy",
-            Telephone = "638334112"
+            Task = "Tapetowanie"
         },
-        new Employee
+        new Workday
         {
-            FirstName = "Marcin",
-            LastName = "Książkowy",
-            Telephone = "698332444"
+            Task = "Zamiatanie"
         },
-        new Employee
-        {
-            FirstName = "Mateusz",
-            LastName = "Ścianowy",
-            Telephone = "638334112"
-        },
-        new Employee
-        {
-            FirstName = "Paweł",
-            LastName = "Doniczkowy",
-            Telephone = "638334112"
-        },
-        new Employee
-        {
-            FirstName = "Krystian",
-            LastName = "Biurkowy",
-            Telephone = "638334112"
-        }
         };
 
-        context.Employees.AddRange(employees);
+        context.Workdays.AddRange(workdays);
         context.SaveChanges();
       }
     }
