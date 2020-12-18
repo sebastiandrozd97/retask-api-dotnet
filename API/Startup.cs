@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
+using AutoMapper;
 
 namespace API
 {
@@ -35,6 +36,7 @@ namespace API
     {
       services.AddDbContext<DataContext>(opt =>
       {
+        opt.UseLazyLoadingProxies();
         opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
       });
 
@@ -46,7 +48,7 @@ namespace API
               });
       });
       services.AddMediatR(typeof(List.Handler).Assembly);
-
+      services.AddAutoMapper(typeof(List.Handler));
       services.AddControllers(opt =>
       {
         var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();

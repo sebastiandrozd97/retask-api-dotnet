@@ -5,10 +5,9 @@ namespace Domain
 {
   public class AppUser : IdentityUser
   {
-    public string DisplayName { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public bool isSupervisor { get; set; }
-    public ICollection<Workday> Workdays { get; set; }
+    public virtual ICollection<Workday> Workdays { get; set; }
   }
 }

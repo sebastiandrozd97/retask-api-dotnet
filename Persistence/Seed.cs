@@ -16,7 +16,6 @@ namespace Persistence
         {
           new AppUser
           {
-            DisplayName = "Seba",
             UserName = "seba",
             FirstName = "Sebastian",
             LastName = "Drozd",
@@ -26,7 +25,6 @@ namespace Persistence
           },
           new AppUser
           {
-            DisplayName = "Piotr",
             UserName = "piotr",
             FirstName = "Piotr",
             LastName = "Płytkowy",
@@ -36,7 +34,6 @@ namespace Persistence
           },
           new AppUser
           {
-            DisplayName = "Artur",
             UserName = "artur",
             FirstName = "Artur",
             LastName = "Malowniczy",
@@ -57,31 +54,31 @@ namespace Persistence
         {
         new Workday
         {
-            Task = "Malowanie, tapetowanie, fugowanie"
+            Task = "Malowanie, tapetowanie, fugowanie",
         },
         new Workday
         {
-            Task = "Malowanie"
+            Task = "Malowanie",
         },
         new Workday
         {
-            Task = "Sprzątanie"
+            Task = "Sprzątanie",
         },
         new Workday
         {
-            Task = "Fugowanie"
+            Task = "Fugowanie",
         },
         new Workday
         {
-            Task = "Szpachlowanie"
+            Task = "Szpachlowanie",
         },
         new Workday
         {
-            Task = "Tapetowanie"
+            Task = "Tapetowanie",
         },
         new Workday
         {
-            Task = "Zamiatanie"
+            Task = "Zamiatanie",
         },
         };
 

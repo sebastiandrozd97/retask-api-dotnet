@@ -54,7 +54,6 @@ namespace Application.User
         {
           return new User
           {
-            DisplayName = user.DisplayName,
             Username = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,

@@ -18,7 +18,6 @@ namespace Application.User
   {
     public class Command : IRequest<User>
     {
-      public string DisplayName { get; set; }
       public string FirstName { get; set; }
       public string LastName { get; set; }
       public string PhoneNumber { get; set; }
@@ -32,7 +31,6 @@ namespace Application.User
     {
       public CommandValidator()
       {
-        RuleFor(x => x.DisplayName).NotEmpty();
         RuleFor(x => x.Username).NotEmpty();
         RuleFor(x => x.FirstName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty().EmailAddress();
@@ -67,7 +65,6 @@ namespace Application.User
 
         var user = new AppUser
         {
-          DisplayName = request.DisplayName,
           FirstName = request.FirstName,
           LastName = request.LastName,
           PhoneNumber = request.PhoneNumber,
@@ -82,7 +79,6 @@ namespace Application.User
         {
           return new User
           {
-            DisplayName = user.DisplayName,
             Token = _jwtGenerator.CreateToken(user),
             Username = user.UserName,
             FirstName = request.FirstName,
