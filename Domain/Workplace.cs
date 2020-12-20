@@ -1,16 +1,16 @@
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity;
 
 namespace Domain
 {
-  public class AppUser : IdentityUser
+  public class Workplace
   {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public bool isSupervisor { get; set; }
-    public bool isHired { get; set; }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public bool IsOpen { get; set; }
     public virtual ICollection<Workday> Workdays { get; set; }
     public virtual ICollection<WorkdayMaterial> WorkdayMaterials { get; set; }
     public virtual ICollection<Notification> Notifications { get; set; }
+    public virtual Client Client { get; set; }
   }
 }
