@@ -8,6 +8,8 @@ namespace Domain
     public Guid Id { get; set; }
     public string Name { get; set; }
     public bool IsOpen { get; set; }
+    public string City { get; set; }
+    public string Street { get; set; }
     public virtual ICollection<Workday> Workdays { get; set; }
     public virtual ICollection<WorkdayMaterial> WorkdayMaterials { get; set; }
     public virtual ICollection<Notification> Notifications { get; set; }
