@@ -1,12 +1,11 @@
-using Application.User;
 using AutoMapper;
 using Domain;
 
-namespace Application.Workdays
+namespace Application.Workdays.Mappers
 {
-  public class MappingProfile : Profile
+  public class WorkdayProfile : Profile
   {
-    public MappingProfile()
+    public WorkdayProfile()
     {
       CreateMap<Workday, WorkdayDto>()
         .ForMember(d => d.FirstName, o => o.MapFrom(s => s.Worker.FirstName))

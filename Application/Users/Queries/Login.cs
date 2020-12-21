@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace Application.User
+namespace Application.Users.Queries
 {
   public class Login
   {
@@ -31,10 +32,10 @@ namespace Application.User
     {
       private readonly UserManager<AppUser> _userManager;
       private readonly SignInManager<AppUser> _signInManager;
-      private readonly IJwtGenerator _jwtGenerator;
-      public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IJwtGenerator jwtGenerator)
+      private readonly IMapper _mapper;
+      public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMapper mapper)
       {
-        _jwtGenerator = jwtGenerator;
+        _mapper = mapper;
         _signInManager = signInManager;
         _userManager = userManager;
       }
@@ -52,15 +53,7 @@ namespace Application.User
 
         if (result.Succeeded)
         {
-          return new User
-          {
-            Username = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            isSupervisor = user.isSupervisor,
-            Token = _jwtGenerator.CreateToken(user)
-          };
+          return _mapper.Map<AppUser, User>(user);
         }
 
         throw new RestException(HttpStatusCode.Unauthorized);

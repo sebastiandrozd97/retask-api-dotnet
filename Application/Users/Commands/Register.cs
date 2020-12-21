@@ -3,8 +3,8 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
-using Application.Interfaces;
 using Application.Validators;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.User
+namespace Application.Users.Commands
 {
   public class Register
   {
@@ -20,9 +20,8 @@ namespace Application.User
     {
       public string FirstName { get; set; }
       public string LastName { get; set; }
+      public string UserName { get; set; }
       public string PhoneNumber { get; set; }
-      public string Username { get; set; }
-      public bool isSupervisor { get; set; }
       public string Email { get; set; }
       public string Password { get; set; }
     }
@@ -31,8 +30,8 @@ namespace Application.User
     {
       public CommandValidator()
       {
-        RuleFor(x => x.Username).NotEmpty();
         RuleFor(x => x.FirstName).NotEmpty();
+        RuleFor(x => x.UserName).NotEmpty();
         RuleFor(x => x.Email).NotEmpty().EmailAddress();
         RuleFor(x => x.Password).Password();
       }
@@ -42,11 +41,11 @@ namespace Application.User
 
       private readonly DataContext _context;
       private readonly UserManager<AppUser> _userManager;
-      private readonly IJwtGenerator _jwtGenerator;
+      private readonly IMapper _mapper;
 
-      public Handler(DataContext context, UserManager<AppUser> userManager, IJwtGenerator jwtGenerator)
+      public Handler(DataContext context, UserManager<AppUser> userManager, IMapper mapper)
       {
-        _jwtGenerator = jwtGenerator;
+        _mapper = mapper;
         _userManager = userManager;
         _context = context;
       }
@@ -58,7 +57,7 @@ namespace Application.User
           throw new RestException(HttpStatusCode.BadRequest, new { Email = "Email already exists" });
         }
 
-        if (await _context.Users.AnyAsync(x => x.UserName == request.Username))
+        if (await _context.Users.AnyAsync(x => x.UserName == request.UserName))
         {
           throw new RestException(HttpStatusCode.BadRequest, new { Username = "Username already exists" });
         }
@@ -68,24 +67,17 @@ namespace Application.User
           FirstName = request.FirstName,
           LastName = request.LastName,
           PhoneNumber = request.PhoneNumber,
-          isSupervisor = request.isSupervisor,
+          isSupervisor = false,
+          isHired = true,
           Email = request.Email,
-          UserName = request.Username
+          UserName = request.UserName,
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {
-          return new User
-          {
-            Token = _jwtGenerator.CreateToken(user),
-            Username = user.UserName,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            PhoneNumber = request.PhoneNumber,
-            isSupervisor = request.isSupervisor,
-          };
+          return _mapper.Map<AppUser, User>(user);
         }
 
         throw new Exception("Problem creating user");

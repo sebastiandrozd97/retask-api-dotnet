@@ -1,13 +1,13 @@
-namespace Application.User
+namespace Application.Users
 {
-  public class User
+  public class UserDto
   {
-    public string DisplayName { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string Email { get; set; }
     public string PhoneNumber { get; set; }
     public bool isSupervisor { get; set; }
-    public string Token { get; set; }
-    public string Username { get; set; }
+    public bool isHired { get; set; }
+    public string UserName { get; set; }
   }
 }

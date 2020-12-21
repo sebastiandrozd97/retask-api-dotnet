@@ -19,6 +19,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using AutoMapper;
+using Application.Users.Mappers;
+using Application.Workdays.Mappers;
 
 namespace API
 {
@@ -48,7 +50,13 @@ namespace API
               });
       });
       services.AddMediatR(typeof(List.Handler).Assembly);
-      services.AddAutoMapper(typeof(List.Handler));
+      services.AddSingleton(provider => new MapperConfiguration(cfg =>
+      {
+        cfg.AddProfile(new LoginRegisterProfile(provider.GetService<IJwtGenerator>()));
+        cfg.AddProfile(new UserProfile());
+        cfg.AddProfile(new WorkdayProfile());
+      }).CreateMapper());
+
       services.AddControllers(opt =>
       {
         var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -77,7 +85,7 @@ namespace API
           };
         });
 
-      services.AddScoped<IJwtGenerator, JwtGenerator>();
+      services.AddSingleton<IJwtGenerator, JwtGenerator>();
       services.AddScoped<IUserAccessor, UserAccessor>();
     }
 

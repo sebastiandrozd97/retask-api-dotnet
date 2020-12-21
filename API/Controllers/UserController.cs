@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
-using Application.User;
+using Application.Users;
+using Application.Users.Commands;
+using Application.Users.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +24,7 @@ namespace API.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<User>> CurrentUser()
+    public async Task<ActionResult<UserDto>> CurrentUser()
     {
       return await Mediator.Send(new CurrentUser.Query());
     }
