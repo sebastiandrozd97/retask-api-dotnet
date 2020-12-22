@@ -16,11 +16,11 @@ namespace API.Controllers
       return await Mediator.Send(new List.Query());
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<ActionResult<ClientDto>> Details(Guid id)
-    // {
-    //   return await Mediator.Send(new Details.Query { Id = id });
-    // }
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ClientDto>> Details(Guid id)
+    {
+      return await Mediator.Send(new Details.Query { Id = id });
+    }
 
     [HttpPost]
     public async Task<ActionResult<ClientDto>> Create(Create.Command command)

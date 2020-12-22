@@ -46,9 +46,7 @@ namespace Application.Workdays
           throw new RestException(HttpStatusCode.Unauthorized, new { workday = "Not authorized" });
         }
 
-        var workdayToReturn = _mapper.Map<Workday, WorkdayDto>(workday);
-
-        return workdayToReturn;
+        return _mapper.Map<Workday, WorkdayDto>(workday);
       }
     }
   }
