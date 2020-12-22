@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Clients;
 using Application.Clients.Commands;
+using Application.Clients.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
   public class ClientsController : BaseController
   {
-    // [HttpGet]
-    // public async Task<ActionResult<List<ClientDto>>> List()
-    // {
-    //   return await Mediator.Send(new List.Query());
-    // }
+    [HttpGet]
+    public async Task<ActionResult<List<ClientDto>>> List()
+    {
+      return await Mediator.Send(new List.Query());
+    }
 
     // [HttpGet("{id}")]
     // public async Task<ActionResult<ClientDto>> Details(Guid id)
