@@ -9,7 +9,8 @@ namespace Application.Workdays.Mappers
     {
       CreateMap<Workday, WorkdayDto>()
         .ForMember(d => d.FirstName, o => o.MapFrom(s => s.Worker.FirstName))
-        .ForMember(d => d.LastName, o => o.MapFrom(s => s.Worker.LastName));
+        .ForMember(d => d.LastName, o => o.MapFrom(s => s.Worker.LastName))
+        .ForMember(d => d.Workplace, o => o.MapFrom(s => s.Workplace.Name));
     }
   }
 }
