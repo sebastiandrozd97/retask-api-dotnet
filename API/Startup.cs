@@ -21,6 +21,7 @@ using Persistence;
 using AutoMapper;
 using Application.Users.Mappers;
 using Application.Workdays.Mappers;
+using Application.Clients.Mappers;
 
 namespace API
 {
@@ -55,6 +56,7 @@ namespace API
         cfg.AddProfile(new LoginRegisterProfile(provider.GetService<IJwtGenerator>()));
         cfg.AddProfile(new UserProfile());
         cfg.AddProfile(new WorkdayProfile());
+        cfg.AddProfile(new ClientProfile());
       }).CreateMapper());
 
       services.AddControllers(opt =>

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Workdays;
-using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
