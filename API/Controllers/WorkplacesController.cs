@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Workplaces;
 using Application.Workplaces.Commands;
 using Application.Workplaces.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -26,6 +27,12 @@ namespace API.Controllers
     public async Task<ActionResult<WorkplaceDto>> Create(Create.Command command)
     {
       return await Mediator.Send(command);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Unit>> Delete(Guid id)
+    {
+      return await Mediator.Send(new Delete.Command { Id = id });
     }
   }
 }

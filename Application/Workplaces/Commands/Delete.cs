@@ -6,7 +6,7 @@ using Application.Errors;
 using MediatR;
 using Persistence;
 
-namespace Application.Workdays.Commands
+namespace Application.Workplaces.Commands
 {
   public class Delete
   {
@@ -25,14 +25,14 @@ namespace Application.Workdays.Commands
 
       public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
       {
-        var workday = await _context.Workdays.FindAsync(request.Id);
+        var workplace = await _context.Workplaces.FindAsync(request.Id);
 
-        if (workday == null)
+        if (workplace == null)
         {
-          throw new RestException(HttpStatusCode.NotFound, new { workday = "Not found" });
+          throw new RestException(HttpStatusCode.NotFound, new { workplace = "Not found" });
         }
 
-        _context.Remove(workday);
+        _context.Remove(workplace);
 
         var success = await _context.SaveChangesAsync() > 0;
 
