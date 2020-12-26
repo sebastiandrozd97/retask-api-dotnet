@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Workdays
+namespace Application.Workdays.Commands
 {
   public class Create
   {
@@ -37,13 +37,13 @@ namespace Application.Workdays
           Worker = user,
         };
 
-        _context.Workdays.Add(workday);
+        await _context.Workdays.AddAsync(workday);
 
         var success = await _context.SaveChangesAsync() > 0;
 
         if (success)
         {
-          return _mapper.Map<WorkdayDto>(workday);
+          return _mapper.Map<Workday, WorkdayDto>(workday);
         }
 
         throw new Exception("Problem saving changes");

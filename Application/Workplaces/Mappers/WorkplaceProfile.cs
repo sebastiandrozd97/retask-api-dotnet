@@ -7,7 +7,9 @@ namespace Application.Workplaces.Mappers
   {
     public WorkplaceProfile()
     {
-      CreateMap<Workplace, WorkplaceDto>();
+      CreateMap<Workplace, WorkplaceDto>()
+        .ForMember(d => d.ClientFirstName, o => o.MapFrom(s => s.Client.FirstName))
+        .ForMember(d => d.ClientLastName, o => o.MapFrom(s => s.Client.LastName));
     }
   }
 }

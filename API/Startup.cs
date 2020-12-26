@@ -23,6 +23,7 @@ using Application.Users.Mappers;
 using Application.Workdays.Mappers;
 using Application.Clients.Mappers;
 using Application.Workplaces.Mappers;
+using Application.Workdays.Commands;
 
 namespace API
 {

@@ -6,7 +6,7 @@ using Application.Errors;
 using MediatR;
 using Persistence;
 
-namespace Application.Workdays
+namespace Application.Workdays.Commands
 {
   public class Delete
   {
