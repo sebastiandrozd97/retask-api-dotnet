@@ -22,6 +22,7 @@ using AutoMapper;
 using Application.Users.Mappers;
 using Application.Workdays.Mappers;
 using Application.Clients.Mappers;
+using Application.Workplaces.Mappers;
 
 namespace API
 {
@@ -57,6 +58,7 @@ namespace API
         cfg.AddProfile(new UserProfile());
         cfg.AddProfile(new WorkdayProfile());
         cfg.AddProfile(new ClientProfile());
+        cfg.AddProfile(new WorkplaceProfile());
       }).CreateMapper());
 
       services.AddControllers(opt =>
