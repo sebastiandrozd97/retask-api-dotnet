@@ -24,6 +24,7 @@ using Application.Workdays.Mappers;
 using Application.Clients.Mappers;
 using Application.Workplaces.Mappers;
 using Application.Workdays.Commands;
+using Application.WorkdayMaterials.Mappers;
 
 namespace API
 {
@@ -60,6 +61,7 @@ namespace API
         cfg.AddProfile(new WorkdayProfile());
         cfg.AddProfile(new ClientProfile());
         cfg.AddProfile(new WorkplaceProfile());
+        cfg.AddProfile(new WorkdayMaterialProfile());
       }).CreateMapper());
 
       services.AddControllers(opt =>

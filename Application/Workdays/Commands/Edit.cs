@@ -18,7 +18,13 @@ namespace Application.Workdays.Commands
     {
       public Guid Id { get; set; }
       public string Task { get; set; }
-      public string UserId { get; set; }
+      public DateTime Date { get; set; }
+      public string WorkingFrom { get; set; }
+      public string WorkingTo { get; set; }
+      public double Worktime { get; set; }
+      public string AdditionalInfo { get; set; }
+      public string WorkerId { get; set; }
+      public Guid WorkplaceId { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
@@ -26,7 +32,9 @@ namespace Application.Workdays.Commands
       public CommandValidator()
       {
         RuleFor(x => x.Task).NotEmpty();
-        RuleFor(x => x.UserId).NotEmpty();
+        RuleFor(x => x.Date).NotEmpty();
+        RuleFor(x => x.Worktime).NotEmpty();
+        RuleFor(x => x.WorkerId).NotEmpty();
       }
     }
 
@@ -49,13 +57,24 @@ namespace Application.Workdays.Commands
           throw new RestException(HttpStatusCode.NotFound, new { workday = "Not found" });
         }
 
-        if (workday.Worker == null || workday.Worker.Id != request.UserId)
+        if (workday.Workplace == null || workday.Workplace.Id != request.WorkplaceId)
         {
-          var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.UserId);
+          var workplace = await _context.Workplaces.SingleOrDefaultAsync(x => x.Id == request.WorkplaceId);
+          workday.Workplace = workplace;
+        }
+
+        if (workday.Worker == null || workday.Worker.Id != request.WorkerId)
+        {
+          var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.WorkerId);
           workday.Worker = user;
         }
 
         workday.Task = request.Task ?? workday.Task;
+        workday.Date = request.Date;
+        workday.WorkingFrom = request.WorkingFrom ?? workday.WorkingFrom;
+        workday.WorkingTo = request.WorkingTo ?? workday.WorkingTo;
+        workday.Worktime = request.Worktime;
+        workday.AdditionalInfo = request.AdditionalInfo ?? workday.AdditionalInfo;
 
         var success = await _context.SaveChangesAsync() > 0;
 

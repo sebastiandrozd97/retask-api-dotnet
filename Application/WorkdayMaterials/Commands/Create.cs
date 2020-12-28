@@ -10,18 +10,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Workdays.Commands
+namespace Application.WorkdayMaterials.Commands
 {
   public class Create
   {
-    public class Command : IRequest<WorkdayDto>
+    public class Command : IRequest<WorkdayMaterialDto>
     {
-      public string Task { get; set; }
+      public string Item { get; set; }
+      public double Price { get; set; }
       public DateTime Date { get; set; }
-      public string WorkingFrom { get; set; }
-      public string WorkingTo { get; set; }
-      public double Worktime { get; set; }
-      public string AdditionalInfo { get; set; }
       public string WorkerId { get; set; }
       public Guid WorkplaceId { get; set; }
     }
@@ -30,12 +27,15 @@ namespace Application.Workdays.Commands
     {
       public CommandValidator()
       {
+        RuleFor(x => x.Item).NotEmpty();
+        RuleFor(x => x.Price).NotEmpty();
         RuleFor(x => x.Date).NotEmpty();
-        RuleFor(x => x.Task).NotEmpty();
+        RuleFor(x => x.WorkerId).NotEmpty();
+        RuleFor(x => x.WorkplaceId).NotEmpty();
       }
     }
 
-    public class Handler : IRequestHandler<Command, WorkdayDto>
+    public class Handler : IRequestHandler<Command, WorkdayMaterialDto>
     {
       private readonly DataContext _context;
       private readonly IMapper _mapper;
@@ -45,13 +45,13 @@ namespace Application.Workdays.Commands
         _context = context;
       }
 
-      public async Task<WorkdayDto> Handle(Command request, CancellationToken cancellationToken)
+      public async Task<WorkdayMaterialDto> Handle(Command request, CancellationToken cancellationToken)
       {
-        var worker = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.WorkerId);
+        var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == request.WorkerId);
 
-        if (worker == null)
+        if (user == null)
         {
-          throw new RestException(HttpStatusCode.NotFound, new { worker = "Not found" });
+          throw new RestException(HttpStatusCode.NotFound, new { user = "Not found" });
         }
 
         var workplace = await _context.Workplaces.SingleOrDefaultAsync(x => x.Id == request.WorkplaceId);
@@ -61,25 +61,22 @@ namespace Application.Workdays.Commands
           throw new RestException(HttpStatusCode.NotFound, new { workplace = "Not found" });
         }
 
-        var workday = new Workday
+        var workdayMaterial = new WorkdayMaterial
         {
-          Task = request.Task,
+          Item = request.Item,
+          Price = request.Price,
           Date = request.Date,
-          WorkingFrom = request.WorkingFrom,
-          WorkingTo = request.WorkingTo,
-          Worktime = request.Worktime,
-          AdditionalInfo = request.AdditionalInfo,
           Workplace = workplace,
-          Worker = worker,
+          Worker = user,
         };
 
-        await _context.Workdays.AddAsync(workday);
+        await _context.WorkdayMaterials.AddAsync(workdayMaterial);
 
         var success = await _context.SaveChangesAsync() > 0;
 
         if (success)
         {
-          return _mapper.Map<Workday, WorkdayDto>(workday);
+          return _mapper.Map<WorkdayMaterial, WorkdayMaterialDto>(workdayMaterial);
         }
 
         throw new Exception("Problem saving changes");
