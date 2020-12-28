@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.WorkdayMaterials;
@@ -13,6 +14,12 @@ namespace API.Controllers
     public async Task<ActionResult<List<WorkdayMaterialDto>>> List()
     {
       return await Mediator.Send(new List.Query());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<WorkdayMaterialDto>> Details(Guid id)
+    {
+      return await Mediator.Send(new Details.Query { Id = id });
     }
 
     [HttpPost]
