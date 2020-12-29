@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Notifications;
@@ -14,6 +15,12 @@ namespace API.Controllers
     public async Task<ActionResult<List<NotificationDto>>> List()
     {
       return await Mediator.Send(new List.Query());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<NotificationDto>> Details(Guid id)
+    {
+      return await Mediator.Send(new Details.Query { Id = id });
     }
 
     [HttpPost]
