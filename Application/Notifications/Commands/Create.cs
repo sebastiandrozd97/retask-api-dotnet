@@ -63,6 +63,7 @@ namespace Application.Notifications.Commands
         {
           Action = request.Action,
           Date = request.Date,
+          IsSeen = false,
           Workplace = workplace,
           Worker = worker,
         };
