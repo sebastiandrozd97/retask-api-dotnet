@@ -11,8 +11,6 @@ namespace Application.Workplaces
     public bool IsOpen { get; set; }
     public string City { get; set; }
     public string Street { get; set; }
-    public ICollection<Workday> Workdays { get; set; }
-    public ICollection<WorkdayMaterial> WorkdayMaterials { get; set; }
     public string ClientFirstName { get; set; }
     public string ClientLastName { get; set; }
   }
