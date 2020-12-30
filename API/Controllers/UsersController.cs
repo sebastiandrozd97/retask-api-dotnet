@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Users;
 using Application.Users.Commands;
@@ -9,6 +10,12 @@ namespace API.Controllers
 {
   public class UsersController : BaseController
   {
+    [HttpGet]
+    public async Task<ActionResult<List<UserDto>>> List()
+    {
+      return await Mediator.Send(new List.Query());
+    }
+
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<User>> Login(Login.Query query)
@@ -23,7 +30,7 @@ namespace API.Controllers
       return await Mediator.Send(command);
     }
 
-    [HttpGet]
+    [HttpGet("current")]
     public async Task<ActionResult<UserDto>> CurrentUser()
     {
       return await Mediator.Send(new CurrentUser.Query());
