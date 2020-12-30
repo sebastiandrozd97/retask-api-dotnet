@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Application.Workplaces;
 using Domain;
 
 namespace Application.Clients
@@ -10,6 +11,6 @@ namespace Application.Clients
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
-    public ICollection<Workplace> Workplaces { get; set; }
+    public ICollection<WorkplaceDto> Workplaces { get; set; }
   }
 }
