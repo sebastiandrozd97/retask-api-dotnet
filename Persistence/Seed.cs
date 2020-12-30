@@ -20,7 +20,7 @@ namespace Persistence
             FirstName = "Sebastian",
             LastName = "Drozd",
             PhoneNumber = "673443112",
-            isSupervisor = true,
+            IsSupervisor = true,
             Email = "seba@test.com"
           },
           new AppUser
@@ -29,7 +29,7 @@ namespace Persistence
             FirstName = "Piotr",
             LastName = "Płytkowy",
             PhoneNumber = "775554666",
-            isSupervisor = false,
+            IsSupervisor = false,
             Email = "piotr@test.com"
           },
           new AppUser
@@ -38,7 +38,7 @@ namespace Persistence
             FirstName = "Artur",
             LastName = "Malowniczy",
             PhoneNumber = "884443454",
-            isSupervisor = false,
+            IsSupervisor = false,
             Email = "artur@test.com"
           },
         };

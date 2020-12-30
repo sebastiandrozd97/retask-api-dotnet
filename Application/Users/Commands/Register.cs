@@ -67,8 +67,8 @@ namespace Application.Users.Commands
           FirstName = request.FirstName,
           LastName = request.LastName,
           PhoneNumber = request.PhoneNumber,
-          isSupervisor = false,
-          isHired = true,
+          IsSupervisor = true,
+          IsHired = true,
           Email = request.Email,
           UserName = request.UserName,
         };

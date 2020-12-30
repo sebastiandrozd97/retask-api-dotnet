@@ -35,7 +35,7 @@ namespace Application.Users.Queries
       {
         var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
 
-        if (user == null || user.isSupervisor == false)
+        if (user == null || !user.IsSupervisor)
         {
           throw new RestException(HttpStatusCode.Unauthorized, new { user = "Unauthorized" });
         }

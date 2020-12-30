@@ -41,7 +41,7 @@ namespace Application.Workdays
           throw new RestException(HttpStatusCode.NotFound, new { workday = "Not found" });
         }
 
-        if (workday.Worker.Id != user.Id && !user.isSupervisor)
+        if (workday.Worker.Id != user.Id && !user.IsSupervisor)
         {
           throw new RestException(HttpStatusCode.Unauthorized, new { workday = "Not authorized" });
         }

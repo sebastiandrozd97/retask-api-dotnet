@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Users;
@@ -27,6 +28,13 @@ namespace API.Controllers
     [HttpPost("register")]
     public async Task<ActionResult<User>> Register(Register.Command command)
     {
+      return await Mediator.Send(command);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<UserDto>> Edit(string id, Edit.Command command)
+    {
+      command.Id = id;
       return await Mediator.Send(command);
     }
 

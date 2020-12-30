@@ -41,7 +41,7 @@ namespace Application.WorkdayMaterials.Queries
           throw new RestException(HttpStatusCode.NotFound, new { workdayMaterial = "Not found" });
         }
 
-        if (workdayMaterial.Worker.Id != user.Id && !user.isSupervisor)
+        if (workdayMaterial.Worker.Id != user.Id && !user.IsSupervisor)
         {
           throw new RestException(HttpStatusCode.Unauthorized, new { workday = "Not authorized" });
         }
