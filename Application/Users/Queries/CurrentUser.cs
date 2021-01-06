@@ -1,5 +1,7 @@
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using Application.Interfaces;
 using AutoMapper;
 using Domain;
@@ -27,6 +29,11 @@ namespace Application.Users.Queries
       public async Task<UserDto> Handle(Query request, CancellationToken cancellationToken)
       {
         var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+
+        if (user == null)
+        {
+          throw new RestException(HttpStatusCode.Unauthorized, new { user = "Unauthorized" });
+        }
 
         return _mapper.Map<AppUser, UserDto>(user);
       }
